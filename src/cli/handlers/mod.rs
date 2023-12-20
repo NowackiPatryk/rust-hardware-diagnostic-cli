@@ -1,33 +1,18 @@
 mod utils;
+mod structs;
+
 use std::collections::HashMap;
+use crate::{sysinfo::{get_cpu_info, get_components_temp}, cli::handlers::structs::Displayable};
 
-use crate::sysinfo::{get_cpu_info, get_components_temp, CpuInfo};
-
-#[derive(Clone)]
-struct MinMaxComponentTemps {
-  label: String,
-  current_temp: f32,
-  max_temp: f32,
-  min_temp: f32,
-}
-
-fn format_temperature_message(temp: MinMaxComponentTemps) -> String {
-  format!("{}: \n Current: {:.2}°C \n Min: {:.2}°C \n Max: {:.2}°C \n\n", temp.label, temp.current_temp, temp.min_temp, temp.max_temp)
-}
-
-fn format_cpu_info_message(cpu_info: CpuInfo) -> String {
-  format!("#{} - Frequency: {}HZ, Usage: {:.1}%", cpu_info.number, cpu_info.frequency, cpu_info.usage)
-}
-
-fn get_initial_min_max_temps() -> HashMap<String, MinMaxComponentTemps> {
-  let mut min_max_temps:  HashMap<String, MinMaxComponentTemps> = HashMap::new();
+fn get_initial_min_max_temps() -> HashMap<String, structs::DisplayableComponentTemps> {
+  let mut min_max_temps:  HashMap<String, structs::DisplayableComponentTemps> = HashMap::new();
 
   let result = get_components_temp();
 
   for temp in result {
     let label = temp.label.clone();
 
-    min_max_temps.insert(temp.label, MinMaxComponentTemps {
+    min_max_temps.insert(temp.label, structs::DisplayableComponentTemps {
       label: label,
       current_temp: temp.celsius_temp.clone(),
       max_temp: temp.celsius_temp.clone(),
@@ -39,7 +24,7 @@ fn get_initial_min_max_temps() -> HashMap<String, MinMaxComponentTemps> {
 }
 
 pub fn display_components_temperatures_live() {
-  let mut min_max_temps = get_initial_min_max_temps();
+  let mut min_max_temps: HashMap<String, structs::DisplayableComponentTemps> = get_initial_min_max_temps();
 
   loop {
     utils::clear_screen();
@@ -60,7 +45,7 @@ pub fn display_components_temperatures_live() {
         temps.min_temp = temp.celsius_temp;
       }
 
-      println!("{}", format_temperature_message(temps.clone()));
+      println!("{}", temps.get_display_string());
     };
   }
 }
@@ -73,7 +58,13 @@ pub fn display_cpu_info_live() {
     let result = get_cpu_info();
 
     for cpu_info in result {
-      println!("{}", format_cpu_info_message(cpu_info));
+      let displayable_cpu_info = structs::DisplayableCpuInfo {
+        number: cpu_info.number,
+        frequency: cpu_info.frequency,
+        usage: cpu_info.usage,
+      };
+
+      println!("{}", displayable_cpu_info.get_display_string());
     }
   }
 }
