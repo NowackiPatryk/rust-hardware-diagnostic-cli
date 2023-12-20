@@ -12,4 +12,4 @@ From project root folder run:
 # Availiable commands:
  * `temp` - Shows current, minimum and maxium temperature of hardware components in real time.
  * `cpuinfo` - Shows cpu usage and frequency in real time.
- * `cpubenchmark` - Quick and simple cpu benchmark. Show final score at the end.
+ * `cpubenchmark` - Quick and simple cpu benchmark. Shows final score at the end.
