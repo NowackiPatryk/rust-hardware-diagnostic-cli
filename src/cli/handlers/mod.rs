@@ -1,5 +1,6 @@
 mod utils;
 mod structs;
+
 use std::collections::HashMap;
 use crate::{sysinfo::{get_cpu_info, get_components_temp}, cli::handlers::structs::Displayable};
 
