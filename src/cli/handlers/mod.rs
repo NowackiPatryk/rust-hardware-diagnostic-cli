@@ -2,7 +2,7 @@ mod utils;
 mod structs;
 
 use std::collections::HashMap;
-use crate::{sysinfo::{get_cpu_info, get_components_temp}, cli::handlers::structs::Displayable};
+use crate::{sysinfo::{get_cpu_info, get_components_temp, systembenchmark::benchmark_cpu}, cli::handlers::structs::Displayable};
 
 fn get_initial_min_max_temps() -> HashMap<String, structs::DisplayableComponentTemps> {
   let mut min_max_temps:  HashMap<String, structs::DisplayableComponentTemps> = HashMap::new();
@@ -67,4 +67,19 @@ pub fn display_cpu_info_live() {
       println!("{}", displayable_cpu_info.get_display_string());
     }
   }
+}
+
+pub fn cpu_benchmark() {
+  println!("Benchmark started...");
+
+  const BENCHMARKS_NUMBER: u128 = 100;
+  let mut current_benchmark: u128 = 1;
+  let mut final_score: u128 = 0;
+
+  while current_benchmark <= BENCHMARKS_NUMBER {
+    final_score += benchmark_cpu() / BENCHMARKS_NUMBER;
+    current_benchmark += 1;
+  }
+
+  println!("Benchmark ended. Your average score is: {}", final_score);
 }
