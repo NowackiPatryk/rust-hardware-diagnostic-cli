@@ -1,5 +1,6 @@
 use sysinfo::{System, SystemExt, ComponentExt, Component, CpuExt, Cpu};
 pub mod structs;
+pub mod systembenchmark;
 
 pub fn get_components_temp() -> Vec<structs::ComponentTemperature> {
   let mut sys = System::new_all();
