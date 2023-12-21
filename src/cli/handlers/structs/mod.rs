@@ -18,12 +18,13 @@ impl Displayable for DisplayableComponentTemps {
 
 pub struct DisplayableCpuInfo {
   pub number: usize,
+  pub name: String,
   pub frequency: u64,
   pub usage: f32,
 }
 
 impl Displayable for DisplayableCpuInfo {
   fn get_display_string(&self) -> String {
-    format!("#{} - Frequency: {}HZ, Usage: {:.1}%", self.number, self.frequency, self.usage)
+    format!("#{} {} - Frequency: {}HZ, Usage: {:.1}%", self.number, self.name, self.frequency, self.usage)
   }
 }
