@@ -33,7 +33,7 @@ fn extract_cpu_info(cpus: &[Cpu]) -> Vec<structs::CpuInfo> {
   let mut cpu_info: Vec<structs::CpuInfo> = Vec::new();
 
   for (index, cpu) in cpus.iter().enumerate() {
-    cpu_info.push(structs::CpuInfo { number: index + 1, frequency: cpu.frequency(), usage: cpu.cpu_usage() })
+    cpu_info.push(structs::CpuInfo { number: index + 1, name: cpu.brand().to_string(), frequency: cpu.frequency(), usage: cpu.cpu_usage() })
   };
 
   cpu_info

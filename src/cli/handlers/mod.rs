@@ -59,6 +59,7 @@ pub fn display_cpu_info_live() {
 
     for cpu_info in result {
       let displayable_cpu_info = structs::DisplayableCpuInfo {
+        name: cpu_info.name,
         number: cpu_info.number,
         frequency: cpu_info.frequency,
         usage: cpu_info.usage,

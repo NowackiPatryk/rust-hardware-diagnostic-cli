@@ -5,6 +5,7 @@ pub struct ComponentTemperature {
 
 pub struct CpuInfo {
   pub number: usize,
+  pub name: String,
   pub frequency: u64,
   pub usage: f32,
 }
