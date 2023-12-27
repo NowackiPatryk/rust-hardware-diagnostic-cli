@@ -3,7 +3,7 @@ mod utils;
 
 use crate::{
     cli::handlers::structs::Displayable,
-    sysinfo::{get_components_temp, get_cpu_info, systembenchmark::benchmark_cpu},
+    sysinfo::{get_components_temp, get_cpu_info, systembenchmark::process_benchmark},
 };
 use std::collections::HashMap;
 
@@ -79,15 +79,6 @@ pub fn display_cpu_info_live() {
 
 pub fn cpu_benchmark() {
     println!("Benchmark started...");
-
-    const BENCHMARKS_NUMBER: u128 = 100;
-    let mut current_benchmark: u128 = 1;
-    let mut final_score: u128 = 0;
-
-    while current_benchmark <= BENCHMARKS_NUMBER {
-        final_score += benchmark_cpu() / BENCHMARKS_NUMBER;
-        current_benchmark += 1;
-    }
-
-    println!("Benchmark ended. Your average score is: {}", final_score);
+    let score = process_benchmark();
+    println!("Bnechmark ended: Score: {score}");
 }
